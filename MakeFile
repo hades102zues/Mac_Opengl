@@ -8,7 +8,8 @@ CXX = clang++
 CFLAGS = -Wall -Wextra -g -02 -std=c++11
 
 
-#Include Paths
+
+#hInclude Paths
 glfw_include =  $(vendor_folder)/glfw/include
 glad_include = $(vendor_folder)/glad/include
 INCLUDES = -I$(glfw_include) -I$(glad_include)
