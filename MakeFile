@@ -1,0 +1,64 @@
+#App
+APP_N  = game
+vendor_folder = ./vendors
+
+#Compiler 
+CC = clang
+CXX = clang++
+CFLAGS = -Wall -Wextra -g -02 -std=c++11
+
+
+#Include Paths
+glfw_include =  $(vendor_folder)/glfw/include
+glad_include = $(vendor_folder)/glad/include
+INCLUDES = -I$(glfw_include) -I$(glad_include)
+
+
+#Lib Paths
+glfw_lib = $(vendor_folder)/lib-arm64
+LIB_PATHS = -L$(glfw_lib)
+
+
+#Linker Objects
+LIBS = -llibglfw.3.dylib -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
+
+
+#NOTES
+#what is the name of the glfw lib. 
+#how to correctly use .Phony
+
+#Output location
+BIN = bin
+
+#Create a string that lists all of the cpp files at the said directory and store in SRC
+SRC = $(wildcard ./src/*.cpp)
+
+#Take the SRC string and replace every instance of .cpp with .o and store. Store the new string in OBJ
+OBJ = $(SRC:.cpp=o)
+
+
+#tells make of instances where the target isn't actually a file
+
+
+
+#Control Flow
+.Phony: all clean
+run: all
+all: clean dir game
+clean: 
+
+dir: 
+	mkdir -p ./$(BIN) 
+
+
+#Linking Phase
+game: $(OBJ)
+	cd ./$(BIN)/build && $(CXX) -o ./$(BIN)/game $^ $(LIB_PATHS) $(LIBS)
+
+#Compilation Phase
+%.o: %.cpp 
+	$(CXX) -o ./$(BIN)/build/$@ -c ./src/$< $(CFLAGS) $(INCLUDES)
+
+
+
+
