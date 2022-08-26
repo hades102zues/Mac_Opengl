@@ -52,14 +52,14 @@ all: buildClean dir libs game objClean
  
 
 dir: 
-	mkdir -p ./$(BIN)/build 
+	mkdir -p ./$(BIN) 
 
 libs : 
 	$(CXX) -o src/glad.o -c src/glad.c $(CFLAGS) $(INCLUDES)
 
 #Linking Phase
 game: $(OBJ)
-	$(CXX) -o ./$(BIN)/game $^ $(LIB_PATHS) $(LIBS)
+	$(CXX) -o ./src/game $^ src/glad.o $(LIB_PATHS) $(LIBS)
 	
 
 #Compilation Phase
@@ -67,7 +67,7 @@ game: $(OBJ)
 	$(CXX) -o $@ -c $< $(CFLAGS) $(INCLUDES)
 
 buildClean:
-	rm -f $(bin)/build/game
+	rm -f src/game.exe
 objClean:
 	rm -f src/*.o
 

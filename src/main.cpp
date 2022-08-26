@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <string>
+#include <filesystem>
 
 #include "shader.hpp"
 #define STB_IMAGE_IMPLEMENTATION
@@ -12,7 +13,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-
+//TODO
+// (1) FIND A WAY TO PROGRAMMATICALLY CAPTURE THE LOCATION OF THE SHADER FILES
 
 // Window Variables
 int windowHeight = 600;
@@ -124,12 +126,12 @@ int main(int argc, char** argv) {
 
 	// SETUP Window and OpenGl Functions
 	glfwInit();
+	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-#ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
+
 
 	GLFWwindow* window = glfwCreateWindow(windowWidth, windowHeight, "Game", NULL, NULL);
 
@@ -147,13 +149,16 @@ int main(int argc, char** argv) {
 		return -1;
 	}
 
+	//get the actual buffer size of the window and resize viewport
+	glfwGetFramebufferSize(window, &windowWidth, &windowHeight);
 	glViewport(0, 0, windowWidth, windowHeight);
+	
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glEnable(GL_DEPTH_TEST);
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-
+	std::cout << "PROGRAM DIRECTORY: " << std::filesystem::current_path().string() << std::endl;
 
 	// VERTEX DATA
 	float vertices[] = {
@@ -204,7 +209,7 @@ int main(int argc, char** argv) {
 
 
 	// ====SETUP CUBE OBJECT=========
-	Shader cubeShader("./cube_shader.vs", "./cube_shader.fs");
+	Shader cubeShader("Documents/code/game_engine/3_moved_to_mac/src/cube_shader.vs", "Documents/code/game_engine/3_moved_to_mac/src/cube_shader.fs");
 
 	
 	unsigned int cubeVao;
@@ -228,7 +233,7 @@ int main(int argc, char** argv) {
 	
 	
 	// ===SETUP LIGHT CUBE=====
-	Shader lightCubeShader("./light_shader.vs", "light_shader.fs");
+	Shader lightCubeShader("Documents/code/game_engine/3_moved_to_mac/src/light_shader.vs", "Documents/code/game_engine/3_moved_to_mac/src/light_shader.fs");
 
 	unsigned int lightVao;
 	glGenVertexArrays(1, &lightVao);
@@ -255,7 +260,7 @@ int main(int argc, char** argv) {
 
 
 		//clear buffer
-		glClearColor(0.075f, 0.075f, 0.075f, 1.0f); //(0.2f, 0.3f, 0.3f, 1.0f)
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f); //(0.075f, 0.075f, 0.075f, 1.0f)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 
