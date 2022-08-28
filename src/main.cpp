@@ -209,7 +209,7 @@ int main(int argc, char** argv) {
 
 
 	// ====SETUP CUBE OBJECT=========
-	Shader cubeShader("Documents/code/game_engine/3_moved_to_mac/src/cube_shader.vs", "Documents/code/game_engine/3_moved_to_mac/src/cube_shader.fs");
+	Shader cubeShader("src/cube_shader.vs", "src/cube_shader.fs");
 
 	
 	unsigned int cubeVao;
@@ -233,7 +233,7 @@ int main(int argc, char** argv) {
 	
 	
 	// ===SETUP LIGHT CUBE=====
-	Shader lightCubeShader("Documents/code/game_engine/3_moved_to_mac/src/light_shader.vs", "Documents/code/game_engine/3_moved_to_mac/src/light_shader.fs");
+	Shader lightCubeShader("src/light_shader.vs", "src/light_shader.fs");
 
 	unsigned int lightVao;
 	glGenVertexArrays(1, &lightVao);
@@ -269,12 +269,13 @@ int main(int argc, char** argv) {
 		cubeShader.setVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
 		cubeShader.setVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
 		cubeShader.setVec3("lightPos", lightPos);
-
+		
+		cubeShader.setVec3("cameraPos", cameraPos);
 		glm::mat4 model = glm::mat4(1.0f);
 		glm::mat4 view;
 		glm::mat4 projection;
 		
-
+		model = glm::scale(model, glm::vec3(1.5f));
 		model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 		view = glm::lookAt(cameraPos, cameraPos + arbitraryStepFromCamera, arbitraryCameraUp);
 		projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
