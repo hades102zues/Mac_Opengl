@@ -269,8 +269,13 @@ int main(int argc, char** argv) {
 		cubeShader.setVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
 		cubeShader.setVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
 		cubeShader.setVec3("lightPos", lightPos);
-		
 		cubeShader.setVec3("cameraPos", cameraPos);
+		
+		cubeShader.setVec3("material.ambient", glm::vec3(1.0f, 0.5f, 0.31f));
+		cubeShader.setVec3("material.diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
+		cubeShader.setVec3("material.specular", glm::vec3(1.0f, 0.5, 0.31f));
+		cubeShader.setFloat("material.shinny", 32.0f);
+
 		glm::mat4 model = glm::mat4(1.0f);
 		glm::mat4 view;
 		glm::mat4 projection;
