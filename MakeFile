@@ -46,9 +46,9 @@ OBJ = $(SRC_CPP:.cpp=.o)
 
 
 #Control Flow
-.Phony: run objClean buildClean #all targets that will be explicity called shoulid be placed here
+.Phony: run objClean buildClean launchBuild #all targets that will be explicity called shoulid be placed here
 run: all
-all: buildClean dir libs game objClean
+all: buildClean dir libs game objClean launchBuild
  
 
 dir: 
@@ -72,4 +72,5 @@ objClean:
 	rm -f src/*.o
 
 	
-
+launchBuild:
+	src/game
