@@ -1,8 +1,7 @@
 #version 330 core
 out vec4 FragColor;  
 
-uniform vec3 objectColor; //the amount of light color being reflected
-uniform vec3 lightColor;  //color of the light source
+uniform vec3 objectColor; //the amount of light color being reflected uniform vec3 lightColor;  //color of the light source
 uniform vec3 lightPos; //position of the light
 uniform vec3 cameraPos; //position of the camera
 in vec3 FragPos;
@@ -15,9 +14,7 @@ struct Material {
 	vec3 specular;
 	float shinny;
 };
-
 uniform Material material;
-
 struct Light {
 
 	vec3 ambient;
@@ -37,7 +34,7 @@ void main()
     vec3 diffuse = lightProperties.diffuse * (diff * material.diffuse);
 
     vec3 viewDir = normalize(cameraPos - FragPos); //vector from frag to camera
-    vec3 reflectRay = reflect(-toLight,Normal); //the reflected light ray that hit the surface
+    vec3 reflectRay = reflect(-toLight,normal); //the reflected light ray that hit the surface
     float shine = pow(max(dot(viewDir, reflectRay), 0.0), material.shinny);
     vec3 specular = lightProperties.specular * (shine * material.specular);
     
