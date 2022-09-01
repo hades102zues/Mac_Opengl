@@ -12,7 +12,7 @@ in vec2 TextureCoord;
 struct Material {
 	
 	sampler2D diffuse;	
-	vec3 specular;
+        sampler2D specular;
 	float shinny;
 };
 uniform Material material;
@@ -37,11 +37,10 @@ void main()
     	vec3 viewDir = normalize(cameraPos - FragPos); //vector from frag to camera
     vec3 reflectRay = reflect(-toLight,normal); //the reflected light ray that hit the surface
     	float shine = pow(max(dot(viewDir, reflectRay), 0.0), material.shinny);
-    	vec3 specular = lightProperties.specular * (shine * material.specular);
+    	vec3 specular = lightProperties.specular * (shine * texture(material.specular, TextureCoord).rgb);
     
 
     	vec3 result = ambient + diffuse + specular;
-
     	FragColor = vec4(result, 1.0);
 
 }
